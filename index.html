@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePrep Pro - Technical Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.3);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --easy: #10b981;
+            --medium: #f59e0b;
+            --hard: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, var(--primary) 0%, #0c1222 100%);
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .difficulty-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary);
+            color: var(--text);
+            border-color: var(--accent);
+        }
+
+        .filter-btn.easy.active { border-color: var(--easy); color: var(--easy); }
+        .filter-btn.medium.active { border-color: var(--medium); color: var(--medium); }
+        .filter-btn.hard.active { border-color: var(--hard); color: var(--hard); }
+
+        .challenge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .challenge-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .challenge-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .challenge-item {
+            padding: 1rem;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .challenge-item:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .challenge-item.active {
+            border-color: var(--accent);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        .challenge-item.completed {
+            border-color: var(--success);
+        }
+
+        .challenge-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .difficulty-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .difficulty-badge.easy { background: rgba(16, 185, 129, 0.2); color: var(--easy); }
+        .difficulty-badge.medium { background: rgba(245, 158, 11, 0.2); color: var(--medium); }
+        .difficulty-badge.hard { background: rgba(239, 68, 68, 0.2); color: var(--hard); }
+
+        .challenge-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Challenge Header */
+        .challenge-header {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+        }
+
+        .challenge-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .timer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            border-radius: 10px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .timer.green { color: var(--success); }
+        .timer.amber { color: var(--warning); }
+        .timer.red { color: var(--error); animation: pulse 1s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .timer-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--primary);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timer-btn:hover {
+            border-color: var(--accent);
+            background: var(--secondary);
+        }
+
+        /* Problem Description */
+        .problem-section {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .problem-text {
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-text code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--primary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+
+        .examples {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .example-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent);
+        }
+
+        /* Code Editor */
+        .editor-section {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .editor-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .editor-tab {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Source Sans 3', sans-serif;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .editor-tab.active {
+            background: var(--secondary);
+            color: var(--text);
+        }
+
+        .editor-wrapper {
+            display: grid;
+            grid-template-columns: 50px 1fr;
+        }
+
+        .line-numbers {
+            background: var(--primary);
+            padding: 1rem 0.5rem;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            user-select: none;
+            border-right: 1px solid var(--border);
+            line-height: 1.6;
+        }
+
+        #code-editor {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+        }
+
+        /* Action Buttons */
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #06b6d4;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+        }
+
+        .btn-warning {
+            background: transparent;
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Results Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .modal-icon.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .modal-icon.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-message {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .modal-stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .modal-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .modal-close {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            color: var(--primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Solution Panel */
+        .solution-panel {
+            display: none;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .solution-panel.active {
+            display: block;
+        }
+
+        .solution-code {
+            background: var(--primary);
+            padding: 1rem;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            color: var(--success);
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 400px;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: var(--text-muted);
+        }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-card-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
+            .stats-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .header-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+            .challenge-title-row {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            .stats-dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon"></></div>
+                <span class="logo-text">CodePrep Pro</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-solved">0</div>
+                    <div class="stat-label">Solved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-time">0m</div>
+                    <div class="stat-label">Time</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="streak-days">0</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2 class="sidebar-title">📋 Challenges</h2>
+            <div class="difficulty-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn easy" data-filter="easy">Easy</button>
+                <button class="filter-btn medium" data-filter="medium">Medium</button>
+                <button class="filter-btn hard" data-filter="hard">Hard</button>
+            </div>
+            <div class="challenge-list" id="challenge-list"></div>
+        </aside>
+
+        <main class="main-content">
+            <div class="stats-dashboard" id="stats-dashboard">
+                <div class="stat-card">
+                    <div class="stat-card-icon">🎯</div>
+                    <div class="stat-card-value" id="easy-count">0</div>
+                    <div class="stat-card-label">Easy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon">⚡</div>
+                    <div class="stat-card-value" id="medium-count">0</div>
+                    <div class="stat-card-label">Medium</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon">🔥</div>
+                    <div class="stat-card-value" id="hard-count">0</div>
+                    <div class="stat-card-label">Hard</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-icon">📈</div>
+                    <div class="stat-card-value" id="success-rate">0%</div>
+                    <div class="stat-card-label">Success</div>
+                </div>
+            </div>
+
+            <div id="challenge-content">
+                <div class="empty-state">
+                    <div class="empty-icon">👨‍💻</div>
+                    <h2 class="empty-title">Ready to Practice?</h2>
+                    <p class="empty-text">Select a challenge from the sidebar to begin your coding session</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Results Modal -->
+    <div class="modal-overlay" id="result-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-icon" id="modal-icon">✓</div>
+                <h3 class="modal-title" id="modal-title">Great Job!</h3>
+                <p class="modal-message" id="modal-message">You solved the challenge!</p>
+            </div>
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modal-time">0:00</div>
+                    <div class="modal-stat-label">Time</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modal-score">0</div>
+                    <div class="modal-stat-label">Score</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modal-hints">0</div>
+                    <div class="modal-stat-label">Hints Used</div>
+                </div>
+            </div>
+            <button class="modal-close" id="modal-close">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Challenge Data
+        const challenges = [
+            {
+                id: 1,
+                name: "Two Sum",
+                difficulty: "easy",
+                category: "Arrays",
+                time: 600,
+                description: `Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.`,
+                examples: `Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].`,
+                hints: ["Think about using a hash map", "Store seen numbers as you iterate", "Check if complement exists"],
+                solution: `function twoSum(nums, target) {
+    const map = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        const complement = target - nums[i];
+        if (map.has(complement)) {
+            return [map.get(complement), i];
+        }
+        map.set(nums[i], i);
+    }
+    return [];
+}`,
+                testCases: [
+                    { input: [[2,7,11,15], 9], expected: [0,1] },
+                    { input: [[3,2,4], 6], expected: [1,2] }
+                ]
+            },
+            {
+                id: 2,
+                name: "Palindrome Number",
+                difficulty: "easy",
+                category: "Math",
+                time: 300,
+                description: `Given an integer <code>x</code>, return <code>true</code> if <code>x</code> is a palindrome, and <code>false</code> otherwise.
+
+An integer is a palindrome when it reads the same backward as forward.`,
+                examples: `Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.`,
+                hints: ["Negative numbers are not palindromes", "Try reversing the number", "Stop at half the length"],
+                solution: `function isPalindrome(x) {
+    if (x < 0) return false;
+    const str = x.toString();
+    return str === str.split('').reverse().join('');
+}`,
+                testCases: [
+                    { input: [121], expected: true },
+                    { input: [-121], expected: false }
+                ]
+            },
+            {
+                id: 3,
+                name: "Reverse String",
+                difficulty: "easy",
+                category: "Strings",
+                time: 300,
+                description: `Write a function that reverses a string. The input string is given as an array of characters <code>s</code>.
+
+You must do this by modifying the input array in-place with O(1) extra memory.`,
+                examples: `Input: s = ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]`,
+                hints: ["Use two pointers", "Swap characters from start and end", "Move towards center"],
+                solution: `function reverseString(s) {
+    let left = 0, right = s.length - 1;
+    while (left < right) {
+        [s[left], s[right]] = [s[right], s[left]];
+        left++;
+        right--;
+    }
+    return s;
+}`,
+                testCases: [
+                    { input: [["h","e","l","l","o"]], expected: ["o","l","l","e","h"] }
+                ]
+            },
+            {
+                id: 4,
+                name: "Fizz Buzz",
+                difficulty: "easy",
+                category: "Arrays",
+                time: 300,
+                description: `Given an integer <code>n</code>, return a string array <code>answer</code> (1-indexed) where:
+
+- <code>answer[i] == "FizzBuzz"</code> if <code>i</code> is divisible by 3 and 5.
+- <code>answer[i] == "Fizz"</code> if <code>i</code> is divisible by 3.
+- <code>answer[i] == "Buzz"</code> if <code>i</code> is divisible by 5.
+- <code>answer[i] == i</code> (as a string) if none of the above conditions are true.`,
+                examples: `Input: n = 3
+Output: ["1","2","Fizz"]`,
+                hints: ["Check divisibility by 15 first", "Then check 3 and 5 separately", "Build the string"],
+                solution: `function fizzBuzz(n) {
+    const result = [];
+    for (let i = 1; i <= n; i++) {
+        if (i % 15 === 0) result.push("FizzBuzz");
+        else if (i % 3 === 0) result.push("Fizz");
+        else if (i % 5 === 0) result.push("Buzz");
+        else result.push(i.toString());
+    }
+    return result;
+}`,
+                testCases: [
+                    { input: [3], expected: ["1","2","Fizz"] },
+                    { input: [5], expected: ["1","2","Fizz","4","Buzz"] }
+                ]
+            },
+            {
+                id: 5,
+                name: "Valid Parentheses",
+                difficulty: "easy",
+                category: "Stack",
+                time: 400,
+                description: `Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid.
+
+An input string is valid if:
+1. Open brackets must be closed by the same type of brackets.
+2. Open brackets must be closed in the correct order.
+3. Every close bracket has a corresponding open bracket of the same type.`,
+                examples: `Input: s = "()[]{}"
+Output: true`,
+                hints: ["Use a stack to track opening brackets", "Push opening brackets onto stack", "Pop and match when closing"],
+                solution: `function isValid(s) {
+    const stack = [];
+    const map = { ')': '(', '}': '{', ']': '[' };
+    for (const char of s) {
+        if (char in map) {
+            if (stack.pop() !== map[char]) return false;
+        } else {
+            stack.push(char);
+        }
+    }
+    return stack.length === 0;
+}`,
+                testCases: [
+                    { input: ["()"], expected: true },
+                    { input: ["()[]{}"], expected: true },
+                    { input: ["(]"], expected: false }
+                ]
+            },
+            {
+                id: 6,
+                name: "Maximum Subarray",
+                difficulty: "medium",
+                category: "Dynamic Programming",
+                time: 600,
+                description: `Given an integer array <code>nums</code>, find the subarray with the largest sum, and return its sum.
+
+A subarray is a contiguous non-empty sequence of elements within an array.`,
+                examples: `Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.`,
+                hints: ["Try Kadane's algorithm", "Keep track of current sum and max sum", "Reset if current sum becomes negative"],
+                solution: `function maxSubArray(nums) {
+    let maxSum = nums[0];
+    let currentSum = nums[0];
+    for (let i = 1; i < nums.length; i++) {
+        currentSum = Math.max(nums[i], currentSum + nums[i]);
+        maxSum = Math.max(maxSum, currentSum);
+    }
+    return maxSum;
+}`,
+                testCases: [
+                    { input: [[-2,1,-3,4,-1,2,1,-5,4]], expected: 6 }
+                ]
+            },
+            {
+                id: 7,
+                name: "Merge Two Sorted Lists",
+                difficulty: "easy",
+                category: "Linked List",
+                time: 500,
+                description: `You are given the heads of two sorted linked lists <code>list1</code> and <code>list2</code>.
+
+Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.`,
+                examples: `Input: list1 = [1,2,4], list2 = [1,3,4]
+Output: [1,1,2,3,4,4]`,
+                hints: ["Use a dummy node", "Compare nodes from both lists", "Attach the smaller node"],
+                solution: `function mergeTwoLists(list1, list2) {
+    const dummy = { val: 0, next: null };
+    let current = dummy;
+    while (list1 && list2) {
+        if (list1.val <= list2.val) {
+            current.next = list1;
+            list1 = list1.next;
+        } else {
+            current.next = list2;
+            list2 = list2.next;
+        }
+        current = current.next;
+    }
+    current.next = list1 || list2;
+    return dummy.next;
+}`,
+                testCases: [
+                    { input: [[1,2,4], [1,3,4]], expected: [1,1,2,3,4,4] }
+                ]
+            },
+            {
+                id: 8,
+                name: "Climbing Stairs",
+                difficulty: "easy",
+                category: "Dynamic Programming",
+                time: 400,
+                description: `You are climbing a staircase. It takes <code>n</code> steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?`,
+                examples: `Input: n = 3
+Output: 3
+Explanation: There are three ways: 1+1+1, 1+2, 2+1`,
+                hints: ["This is a Fibonacci sequence", "ways[n] = ways[n-1] + ways[n-2]", "Start with base cases"],
+                solution: `function climbStairs(n) {
+    if (n <= 2) return n;
+    let prev1 = 2, prev2 = 1;
+    for (let i = 3; i <= n; i++) {
+        const curr = prev1 + prev2;
+        prev2 = prev1;
+        prev1 = curr;
+    }
+    return prev1;
+}`,
+                testCases: [
+                    { input: [2], expected: 2 },
+                    { input: [3], expected: 3 }
+                ]
+            },
+            {
+                id: 9,
+                name: "Binary Search",
+                difficulty: "easy",
+                category: "Binary Search",
+                time: 400,
+                description: `Given an array of integers <code>nums</code> which is sorted in ascending order, and an integer <code>target</code>, write a function to search <code>target</code> in <code>nums</code>.
+
+If <code>target</code> exists, then return its index. Otherwise, return <code>-1</code>.
+
+You must write an algorithm with O(log n) runtime complexity.`,
+                examples: `Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+Explanation: 9 exists in nums and its index is 4`,
+                hints: ["Use two pointers: left and right", "Calculate mid point", "Adjust boundaries based on comparison"],
+                solution: `function search(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (nums[mid] === target) return mid;
+        else if (nums[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}`,
+                testCases: [
+                    { input: [[-1,0,3,5,9,12], 9], expected: 4 },
+                    { input: [[-1,0,3,5,9,12], 2], expected: -1 }
+                ]
+            },
+            {
+                id: 10,
+                name: "Container With Most Water",
+                difficulty: "medium",
+                category: "Two Pointers",
+                time: 500,
+                description: `You are given an integer array <code>height</code> of length <code>n</code>. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.`,
+                examples: `Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The max area is between height[1] and height[8]`,
+                hints: ["Use two pointers from both ends", "Move the shorter line inward", "Calculate area at each step"],
+                solution: `function maxArea(height) {
+    let left = 0, right = height.length - 1;
+    let maxArea = 0;
+    while (left < right) {
+        const width = right - left;
+        const h = Math.min(height[left], height[right]);
+        maxArea = Math.max(maxArea, width * h);
+        if (height[left] < height[right]) left++;
+        else right--;
+    }
+    return maxArea;
+}`,
+                testCases: [
+                    { input: [[1,8,6,2,5,4,8,3,7]], expected: 49 }
+                ]
+            },
+            {
+                id: 11,
+                name: "Longest Substring Without Repeating",
+                difficulty: "medium",
+                category: "Sliding Window",
+                time: 600,
+                description: `Given a string <code>s</code>, find the length of the longest substring without repeating characters.`,
+                examples: `Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with length 3.`,
+                hints: ["Use sliding window technique", "Use a Set to track characters", "Shrink window when duplicate found"],
+                solution: `function lengthOfLongestSubstring(s) {
+    const set = new Set();
+    let maxLen = 0, left = 0;
+    for (let right = 0; right < s.length; right++) {
+        while (set.has(s[right])) {
+            set.delete(s[left]);
+            left++;
+        }
+        set.add(s[right]);
+        maxLen = Math.max(maxLen, right - left + 1);
+    }
+    return maxLen;
+}`,
+                testCases: [
+                    { input: ["abcabcbb"], expected: 3 },
+                    { input: ["bbbbb"], expected: 1 }
+                ]
+            },
+            {
+                id: 12,
+                name: "Product of Array Except Self",
+                difficulty: "medium",
+                category: "Arrays",
+                time: 600,
+                description: `Given an integer array <code>nums</code>, return an array <code>answer</code> such that <code>answer[i]</code> is equal to the product of all the elements of <code>nums</code> except <code>nums[i]</code>.
+
+The product of any prefix or suffix of <code>nums</code> is guaranteed to fit in a 32-bit integer.
+
+You must write an algorithm that runs in O(n) time and without using the division operation.`,
+                examples: `Input: nums = [1,2,3,4]
+Output: [24,12,8,6]`,
+                hints: ["Use prefix and postfix products", "First pass: compute prefix products", "Second pass: multiply with postfix"],
+                solution: `function productExceptSelf(nums) {
+    const n = nums.length;
+    const result = new Array(n).fill(1);
+    let prefix = 1;
+    for (let i = 0; i < n; i++) {
+        result[i] = prefix;
+        prefix *= nums[i];
+    }
+    let postfix = 1;
+    for (let i = n - 1; i >= 0; i--) {
+        result[i] *= postfix;
+        postfix *= nums[i];
+    }
+    return result;
+}`,
+                testCases: [
+                    { input: [[1,2,3,4]], expected: [24,12,8,6] }
+                ]
+            },
+            {
+                id: 13,
+                name: "3Sum",
+                difficulty: "hard",
+                category: "Arrays",
+                time: 800,
+                description: `Given an integer array nums, return all the triplets <code>[nums[i], nums[j], nums[k]]</code> such that <code>i != j</code>, <code>i != k</code>, and <code>j != k</code>, and <code>nums[i] + nums[j] + nums[k] == 0</code>.
+
+Notice that the solution set must not contain duplicate triplets.`,
+                examples: `Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Explanation: The distinct triplets are [-1,0,1] and [-1,-1,2].`,
+                hints: ["Sort the array first", "Fix one number, use two-pointer for others", "Skip duplicates"],
+                solution: `function threeSum(nums) {
+    const result = [];
+    nums.sort((a, b) => a - b);
+    for (let i = 0; i < nums.length - 2; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) continue;
+        let left = i + 1, right = nums.length - 1;
+        while (left < right) {
+            const sum = nums[i] + nums[left] + nums[right];
+            if (sum === 0) {
+                result.push([nums[i], nums[left], nums[right]]);
+                while (left < right && nums[left] === nums[left + 1]) left++;
+                while (left < right && nums[right] === nums[right - 1]) right--;
+                left++; right--;
+            } else if (sum < 0) left++;
+            else right--;
+        }
+    }
+    return result;
+}`,
+                testCases: [
+                    { input: [[-1,0,1,2,-1,-4]], expected: [[-1,-1,2],[-1,0,1]] }
+                ]
+            },
+            {
+                id: 14,
+                name: "Trapping Rain Water",
+                difficulty: "hard",
+                category: "Two Pointers",
+                time: 900,
+                description: `Given <code>n</code> non-negative integers representing an elevation map where the width of each bar is <code>1</code>, compute how much water it can trap after raining.`,
+                examples: `Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+Explanation: 6 units of rain water are trapped.`,
+                hints: ["Use two pointers from both ends", "Track max height from each side", "Water at each position = min(maxL, maxR) - height[i]"],
+                solution: `function trap(height) {
+    let left = 0, right = height.length - 1;
+    let maxL = 0, maxR = 0, water = 0;
+    while (left < right) {
+        if (height[left] < height[right]) {
+            if (height[left] >= maxL) maxL = height[left];
+            else water += maxL - height[left];
+            left++;
+        } else {
+            if (height[right] >= maxR) maxR = height[right];
+            else water += maxR - height[right];
+            right--;
+        }
+    }
+    return water;
+}`,
+                testCases: [
+                    { input: [[0,1,0,2,1,0,1,3,2,1,2,1]], expected: 6 }
+                ]
+            },
+            {
+                id: 15,
+                name: "Median of Two Sorted Arrays",
+                difficulty: "hard",
+                category: "Binary Search",
+                time: 1000,
+                description: `Given two sorted arrays <code>nums1</code> and <code>nums2</code> of size m and n respectively, return the median of the two sorted arrays.
+
+The overall run time complexity should be O(log (m+n)).`,
+                examples: `Input: nums1 = [1,3], nums2 = [2]
+Output: 2.00000
+Explanation: merged array = [1,2,3] and median is 2.`,
+                hints: ["Use binary search on the shorter array", "Partition both arrays", "Ensure left halves <= right halves"],
+                solution: `function findMedianSortedArrays(nums1, nums2) {
+    const A = nums1, B = nums2;
+    const m = A.length, n = B.length;
+    if (m > n) return findMedianSortedArrays(B, A);
+    let left = 0, right = m;
+    while (left <= right) {
+        const partitionA = Math.floor((left + right) / 2);
+        const partitionB = Math.floor((m + n + 1) / 2) - partitionA;
+        const maxLeftA = partitionA === 0 ? -Infinity : A[partitionA - 1];
+        const minRightA = partitionA === m ? Infinity : A[partitionA];
+        const maxLeftB = partitionB === 0 ? -Infinity : B[partitionB - 1];
+        const minRightB = partitionB === n ? Infinity : B[partitionB];
+        if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+            if ((m + n) % 2 === 0) {
+                return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2;
+            } else {
+                return Math.max(maxLeftA, maxLeftB);
+            }
+        } else if (maxLeftA > minRightB) {
+            right = partitionA - 1;
+        } else {
+            left = partitionA + 1;
+        }
+    }
+    return 0;
+}`,
+                testCases: [
+                    { input: [[1,3], [2]], expected: 2.0 }
+                ]
+            }
+        ];
+
+        // State
+        let currentChallenge = null;
+        let timer = null;
+        let timeRemaining = 0;
+        let isPaused = false;
+        let hintsUsed = 0;
+        let startTime = null;
+        let progress = JSON.parse(localStorage.getItem('codeprep-progress')) || {
+            solved: [],
+            history: []
+        };
+
+        // DOM Elements
+        const challengeList = document.getElementById('challenge-list');
+        const challengeContent = document.getElementById('challenge-content');
+        const resultModal = document.getElementById('result-modal');
+
+        // Initialize
+        function init() {
+            renderChallengeList();
+            updateStats();
+            setupEventListeners();
+        }
+
+        // Render Challenge List
+        function renderChallengeList(filter = 'all') {
+            const filtered = filter === 'all' 
+                ? challenges 
+                : challenges.filter(c => c.difficulty === filter);
+            
+            challengeList.innerHTML = filtered.map(challenge => `
+                <div class="challenge-item ${progress.solved.includes(challenge.id) ? 'completed' : ''}" 
+                     data-id="${challenge.id}">
+                    <div class="challenge-item-header">
+                        <span class="challenge-name">${challenge.name}</span>
+                        <span class="difficulty-badge ${challenge.difficulty}">${challenge.difficulty}</span>
+                    </div>
+                    <div class="challenge-meta">
+                        <span>⏱️ ${challenge.time}s</span>
+                        <span>📁 ${challenge.category}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click listeners
+            document.querySelectorAll('.challenge-item').forEach(item => {
+                item.addEventListener('click', () => selectChallenge(parseInt(item.dataset.id)));
+            });
+        }
+
+        // Select Challenge
+        function selectChallenge(id) {
+            currentChallenge = challenges.find(c => c.id === id);
+            timeRemaining = currentChallenge.time;
+            hintsUsed = 0;
+            isPaused = false;
+            startTime = Date.now();
+            
+            renderChallengeView();
+            startTimer();
+            
+            // Update active state
+            document.querySelectorAll('.challenge-item').forEach(item => {
+                item.classList.toggle('active', parseInt(item.dataset.id) === id);
+            });
+        }
+
+        // Render Challenge View
+        function renderChallengeView() {
+            challengeContent.innerHTML = `
+                <div class="challenge-header">
+                    <div class="challenge-title-row">
+                        <h1 class="challenge-title">${currentChallenge.name}</h1>
+                        <div class="timer-container">
+                            <button class="timer-btn" id="timer-toggle">${isPaused ? '▶️' : '⏸️'}</button>
+                            <div class="timer green" id="timer">${formatTime(timeRemaining)}</div>
+                            <button class="timer-btn" id="timer-reset">🔄</button>
+                        </div>
+                    </div>
+                    <span class="difficulty-badge ${currentChallenge.difficulty}">${currentChallenge.difficulty}</span>
+                </div>
+
+                <div class="problem-section">
+                    <h3 class="section-title">Problem</h3>
+                    <p class="problem-text">${currentChallenge.description.replace(/\n/g, '<br>')}</p>
+                    
+                    <div class="examples">
+                        <div class="example-title">Example:</div>
+                        <div class="example-content">${currentChallenge.examples}</div>
+                    </div>
+                </div>
+
+                <div class="editor-section">
+                    <div class="editor-header">
+                        <div class="editor-tabs">
+                            <button class="editor-tab active">JavaScript</button>
+                        </div>
+                        <button class="btn btn-warning" id="hint-btn">💡 Hint (-30s)</button>
+                    </div>
+                    <div class="editor-wrapper">
+                        <div class="line-numbers" id="line-numbers">1</div>
+                        <textarea id="code-editor" placeholder="Write your solution here..." spellcheck="false">function solution() {
+    // Write your code here
+    
+}</textarea>
+                    </div>
+                    <div class="action-bar">
+                        <button class="btn btn-secondary" id="reset-code">Reset Code</button>
+                        <button class="btn btn-secondary" id="show-solution">View Solution</button>
+                        <button class="btn btn-primary" id="submit-btn">🚀 Submit</button>
+                    </div>
+                </div>
+
+                <div class="solution-panel" id="solution-panel">
+                    <h3 class="section-title">💡 Solution</h3>
+                    <pre class="solution-code">${currentChallenge.solution}</pre>
+                </div>
+            `;
+
+            setupChallengeViewListeners();
+        }
+
+        // Setup Challenge View Listeners
+        function setupChallengeViewListeners() {
+            const editor = document.getElementById('code-editor');
+            const lineNumbers = document.getElementById('line-numbers');
+
+            editor.addEventListener('input', () => {
+                updateLineNumbers();
+            });
+
+            editor.addEventListener('scroll', () => {
+                lineNumbers.scrollTop = editor.scrollTop;
+            });
+
+            document.getElementById('timer-toggle').addEventListener('click', toggleTimer);
+            document.getElementById('timer-reset').addEventListener('click', resetTimer);
+            document.getElementById('hint-btn').addEventListener('click', useHint);
+            document.getElementById('submit-btn').addEventListener('click', submitCode);
+            document.getElementById('reset-code').addEventListener('click', resetCode);
+            document.getElementById('show-solution').addEventListener('click', toggleSolution);
+
+            document.getElementById('modal-close').addEventListener('click', () => {
+                resultModal.classList.remove('active');
+            });
+
+            // Pause on tab blur
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && !isPaused) {
+                    toggleTimer();
+                }
+            });
+
+            updateLineNumbers();
+        }
+
+        // Update Line Numbers
+        function updateLineNumbers() {
+            const editor = document.getElementById('code-editor');
+            const lineNumbers = document.getElementById('line-numbers');
+            const lines = editor.value.split('\n').length;
+            lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+        }
+
+        // Timer Functions
+        function startTimer() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => {
+                if (!isPaused && timeRemaining > 0) {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    
+                    if (timeRemaining === 0) {
+                        clearInterval(timer);
+                        showResult(false);
+                    }
+                }
+            }, 1000);
+        }
+
+        function toggleTimer() {
+            isPaused = !isPaused;
+            document.getElementById('timer-toggle').textContent = isPaused ? '▶️' : '⏸️';
+        }
+
+        function resetTimer() {
+            timeRemaining = currentChallenge.time;
+            isPaused = false;
+            document.getElementById('timer-toggle').textContent = '⏸️';
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timer');
+            timerEl.textContent = formatTime(timeRemaining);
+            
+            timerEl.classList.remove('green', 'amber', 'red');
+            if (timeRemaining > currentChallenge.time * 0.5) {
+                timerEl.classList.add('green');
+            } else if (timeRemaining > currentChallenge.time * 0.25) {
+                timerEl.classList.add('amber');
+            } else {
+                timerEl.classList.add('red');
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Hint System
+        let currentHint = 0;
+        function useHint() {
+            if (currentHint < currentChallenge.hints.length) {
+                timeRemaining = Math.max(0, timeRemaining - 30);
+                hintsUsed++;
+                alert(`💡 Hint ${currentHint + 1}: ${currentChallenge.hints[currentHint]}`);
+                currentHint++;
+                updateTimerDisplay();
+            } else {
+                alert('No more hints available!');
+            }
+        }
+
+        // Submit Code
+        function submitCode() {
+            const code = document.getElementById('code-editor').value;
+            
+            // Simple validation - check if they wrote something meaningful
+            const hasFunction = code.includes('function') || code.includes('=>');
+            const hasReturn = code.includes('return');
+            
+            if (!hasFunction || !hasReturn) {
+                if (!confirm('Your code doesn\'t seem complete. Submit anyway?')) return;
+            }
+
+            // Check answer based on test cases
+            let passed = false;
+            try {
+                const userFunction = new Function('return ' + code)();
+                passed = currentChallenge.testCases.every(test => {
+                    try {
+                        const result = userFunction(...test.input);
+                        return JSON.stringify(result) === JSON.stringify(test.expected);
+                    } catch {
+                        return false;
+                    }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+
+            showResult(passed);
+        }
+
+        // Show Result
+        function showResult(success) {
+            clearInterval(timer);
+            const timeTaken = currentChallenge.time - timeRemaining;
+            const score = success ? Math.max(0, 100 - hintsUsed * 10 - Math.floor(timeTaken / 10)) : 0;
+
+            // Update progress
+            if (success && !progress.solved.includes(currentChallenge.id)) {
+                progress.solved.push(currentChallenge.id);
+            }
+            progress.history.push({
+                challengeId: currentChallenge.id,
+                time: timeTaken,
+                score,
+                success,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('codeprep-progress', JSON.stringify(progress));
+
+            // Show modal
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            const message = document.getElementById('modal-message');
+
+            if (success) {
+                icon.className = 'modal-icon success';
+                icon.textContent = '✓';
+                title.textContent = '🎉 Great Job!';
+                message.textContent = `You solved ${currentChallenge.name}!`;
+            } else {
+                icon.className = 'modal-icon fail';
+                icon.textContent = '✗';
+                title.textContent = '😅 Keep Trying!';
+                message.textContent = `Time\'s up or incorrect. Check the solution and try again!`;
+            }
+
+            document.getElementById('modal-time').textContent = formatTime(timeTaken);
+            document.getElementById('modal-score').textContent = score;
+            document.getElementById('modal-hints').textContent = hintsUsed;
+
+            resultModal.classList.add('active');
+            updateStats();
+            renderChallengeList(document.querySelector('.filter-btn.active').dataset.filter);
+        }
+
+        // Reset Code
+        function resetCode() {
+            document.getElementById('code-editor').value = `function solution() {
+    // Write your code here
+    
+}`;
+            updateLineNumbers();
+        }
+
+        // Toggle Solution
+        function toggleSolution() {
+            document.getElementById('solution-panel').classList.toggle('active');
+        }
+
+        // Update Stats
+        function updateStats() {
+            const solved = progress.solved.length;
+            const totalTime = progress.history.reduce((acc, h) => acc + h.time, 0);
+            
+            document.getElementById('total-solved').textContent = solved;
+            document.getElementById('total-time').textContent = totalTime >= 60 ? `${Math.floor(totalTime / 60)}m` : `${totalTime}s`;
+            
+            // Calculate streak
+            const today = new Date().toDateString();
+            const lastActivity = progress.history[progress.history.length - 1]?.date;
+            const streak = lastActivity && new Date(lastActivity).toDateString() !== today ? 0 : progress.history.length;
+            document.getElementById('streak-days').textContent = Math.min(streak, 7);
+
+            // Difficulty counts
+            const solvedIds = new Set(progress.solved);
+            document.getElementById('easy-count').textContent = challenges.filter(c => c.difficulty === 'easy' && solvedIds.has(c.id)).length;
+            document.getElementById('medium-count').textContent = challenges.filter(c => c.difficulty === 'medium' && solvedIds.has(c.id)).length;
+            document.getElementById('hard-count').textContent = challenges.filter(c => c.difficulty === 'hard' && solvedIds.has(c.id)).length;
+
+            // Success rate
+            const total = progress.history.length;
+            const successCount = progress.history.filter(h => h.success).length;
+            document.getElementById('success-rate').textContent = total ? `${Math.round(successCount / total * 100)}%` : '0%';
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderChallengeList(btn.dataset.filter);
+                });
+            });
+        }
+
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>
