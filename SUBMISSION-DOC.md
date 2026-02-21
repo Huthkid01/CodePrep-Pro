@@ -59,7 +59,7 @@ Software developers preparing for technical interviews often struggle to find qu
 ---
 
 ## ● Live Project Link
-[To be added after deployment]
+https://code-prep-pro-five.vercel.app/
 
 ---
 
