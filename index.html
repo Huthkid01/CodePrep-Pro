@@ -2092,11 +2092,11 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             });
         }
 
-        // Update Line Numbers
+        // Update Line Numbers (sync with CodeMirror content)
         function updateLineNumbers() {
-            const editor = document.getElementById('code-editor');
             const lineNumbers = document.getElementById('line-numbers');
-            const lines = editor.value.split('\n').length;
+            if (!codeMirrorEditor || !lineNumbers) return;
+            const lines = codeMirrorEditor.lineCount();
             lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
         }
 
@@ -2159,7 +2159,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
 
         // Submit Code
         function submitCode() {
-            const code = document.getElementById('code-editor').value;
+            const code = codeMirrorEditor ? codeMirrorEditor.getValue() : document.getElementById('code-editor').value;
             
             // Simple validation - check if they wrote something meaningful
             const hasFunction = code.includes('function') || code.includes('=>');
@@ -2252,10 +2252,15 @@ Explanation: merged array = [1,2,3] and median is 2.`,
 
         // Reset Code
         function resetCode() {
-            document.getElementById('code-editor').value = `function solution() {
+            const template = `function solution() {
     // Write your code here
     
 }`;
+            if (codeMirrorEditor) {
+                codeMirrorEditor.setValue(template);
+            } else {
+                document.getElementById('code-editor').value = template;
+            }
             updateLineNumbers();
         }
 
