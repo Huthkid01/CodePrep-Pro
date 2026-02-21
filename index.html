@@ -83,6 +83,22 @@
             align-items: center;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--secondary);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1rem;
+        }
+
         .logo {
             display: flex;
             align-items: center;
@@ -1019,6 +1035,9 @@
             header {
                 padding: 0.75rem 1rem;
             }
+            .header-content {
+                gap: 0.5rem;
+            }
             .logo-text {
                 font-size: 1.25rem;
             }
@@ -1029,6 +1048,9 @@
             }
             .header-stats {
                 gap: 1rem;
+            }
+            .mobile-menu-btn {
+                display: flex;
             }
             .stat-value {
                 font-size: 1.25rem;
@@ -1046,6 +1068,18 @@
             /* Sidebar */
             .sidebar {
                 padding: 1rem;
+                position: fixed;
+                top: 64px;
+                left: 0;
+                width: 80%;
+                max-width: 320px;
+                height: calc(100vh - 64px);
+                z-index: 200;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open {
+                transform: translateX(0);
             }
             .sidebar-title {
                 font-size: 1.1rem;
@@ -1289,6 +1323,7 @@
                     <div class="stat-label">Streak</div>
                 </div>
             </div>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle">☰</button>
         </div>
     </header>
 
@@ -1902,6 +1937,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
         const challengeList = document.getElementById('challenge-list');
         const challengeContent = document.getElementById('challenge-content');
         const resultModal = document.getElementById('result-modal');
+        const sidebar = document.querySelector('.sidebar');
 
         // Initialize
         function init() {
@@ -1951,6 +1987,10 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             document.querySelectorAll('.challenge-item').forEach(item => {
                 item.classList.toggle('active', parseInt(item.dataset.id) === id);
             });
+
+            if (window.innerWidth <= 768 && sidebar) {
+                sidebar.classList.remove('open');
+            }
         }
 
         // Render Challenge View
@@ -2274,7 +2314,18 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             document.getElementById('start-btn').addEventListener('click', () => {
                 document.getElementById('homepage').style.display = 'none';
                 showToast('success', 'Welcome!', 'Ready to start practicing? Pick a challenge!');
+
+                if (window.innerWidth <= 768 && sidebar) {
+                    sidebar.classList.add('open');
+                }
             });
+
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            if (mobileMenuToggle && sidebar) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                });
+            }
         }
 
         // Toast Notification System
