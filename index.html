@@ -7,6 +7,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    
+    <!-- CodeMirror for Real Code Editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-darker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/matchbrackets.min.js"></script>
     <style>
         :root {
             --primary: #0f172a;
@@ -522,6 +534,56 @@
             display: flex;
         }
 
+        /* Confirm Modal */
+        .confirm-modal {
+            background: var(--secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid var(--warning);
+            text-align: center;
+            animation: modalIn 0.3s ease;
+        }
+
+        .confirm-modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .confirm-modal-message {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .confirm-modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .confirm-modal-buttons .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-danger {
+            background: var(--error);
+            border: none;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
         .modal {
             background: var(--secondary);
             border-radius: 20px;
@@ -700,6 +762,235 @@
             color: var(--text-muted);
         }
 
+        /* Homepage */
+        .homepage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .hero-section {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-btn {
+            padding: 1rem 3rem;
+            font-size: 1.25rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            border: none;
+            border-radius: 50px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 3rem;
+        }
+
+        .hero-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            min-width: 300px;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .toast.success {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), var(--secondary));
+        }
+
+        .toast.error {
+            border-color: var(--error);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), var(--secondary));
+        }
+
+        .toast.warning {
+            border-color: var(--warning);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), var(--secondary));
+        }
+
+        .toast.info {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), var(--secondary));
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .toast-message {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.25rem;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .toast-close:hover {
+            color: var(--text);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .toast.hiding {
+            animation: slideOut 0.3s ease forwards;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .container {
@@ -709,6 +1000,9 @@
                 position: static;
             }
             .stats-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -730,10 +1024,34 @@
             .stats-dashboard {
                 grid-template-columns: 1fr 1fr;
             }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-stats {
+                gap: 1.5rem;
+            }
+            .hero-stat-value {
+                font-size: 1.75rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .toast-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+            }
+            .toast {
+                min-width: auto;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+    
     <div class="bg-pattern"></div>
     
     <header>
@@ -796,10 +1114,52 @@
             </div>
 
             <div id="challenge-content">
-                <div class="empty-state">
-                    <div class="empty-icon">👨‍💻</div>
-                    <h2 class="empty-title">Ready to Practice?</h2>
-                    <p class="empty-text">Select a challenge from the sidebar to begin your coding session</p>
+                <div class="homepage" id="homepage">
+                    <div class="hero-section">
+                        <div class="hero-icon">👨‍💻</div>
+                        <h1 class="hero-title">Welcome to CodePrep Pro</h1>
+                        <p class="hero-subtitle">Master technical interviews with daily practice</p>
+                        
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <div class="hero-stat-value" id="hero-solved">0</div>
+                                <div class="hero-stat-label">Problems Solved</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="hero-stat-value" id="hero-time">0m</div>
+                                <div class="hero-stat-label">Total Time</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="hero-stat-value" id="hero-streak">0</div>
+                                <div class="hero-stat-label">Day Streak</div>
+                            </div>
+                        </div>
+                        
+                        <button class="hero-btn" id="start-btn">🚀 Start Practicing</button>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🎯</div>
+                                <h3>15+ Challenges</h3>
+                                <p>LeetCode-style problems</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">⏱️</div>
+                                <h3>Timed Practice</h3>
+                                <p>Interview conditions</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">💡</div>
+                                <h3>Hints & Solutions</h3>
+                                <p>Learn as you practice</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📊</div>
+                                <h3>Track Progress</h3>
+                                <p>Monitor your growth</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -828,6 +1188,19 @@
                 </div>
             </div>
             <button class="modal-close" id="modal-close">Continue</button>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="confirm-modal">
+            <div class="confirm-modal-icon">⚠️</div>
+            <h3 class="confirm-modal-title">Incomplete Code</h3>
+            <p class="confirm-modal-message">Your code doesn't seem complete. Are you sure you want to submit?</p>
+            <div class="confirm-modal-buttons">
+                <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+                <button class="btn btn-danger" id="confirm-submit">Submit Anyway</button>
+            </div>
         </div>
     </div>
 
@@ -1300,7 +1673,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
         // State
         let currentChallenge = null;
         let timer = null;
-        let timeRemaining = 0;
+        let elapsedTime = 0;
         let isPaused = false;
         let hintsUsed = 0;
         let startTime = null;
@@ -1308,6 +1681,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             solved: [],
             history: []
         };
+        let codeMirrorEditor = null;
 
         // DOM Elements
         const challengeList = document.getElementById('challenge-list');
@@ -1350,7 +1724,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
         // Select Challenge
         function selectChallenge(id) {
             currentChallenge = challenges.find(c => c.id === id);
-            timeRemaining = currentChallenge.time;
+            elapsedTime = 0;
             hintsUsed = 0;
             isPaused = false;
             startTime = Date.now();
@@ -1372,7 +1746,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
                         <h1 class="challenge-title">${currentChallenge.name}</h1>
                         <div class="timer-container">
                             <button class="timer-btn" id="timer-toggle">${isPaused ? '▶️' : '⏸️'}</button>
-                            <div class="timer green" id="timer">${formatTime(timeRemaining)}</div>
+                            <div class="timer green" id="timer">00:00</div>
                             <button class="timer-btn" id="timer-reset">🔄</button>
                         </div>
                     </div>
@@ -1412,7 +1786,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
 
                 <div class="solution-panel" id="solution-panel">
                     <h3 class="section-title">💡 Solution</h3>
-                    <pre class="solution-code">${currentChallenge.solution}</pre>
+                    <pre><code class="language-javascript">${currentChallenge.solution}</code></pre>
                 </div>
             `;
 
@@ -1421,16 +1795,28 @@ Explanation: merged array = [1,2,3] and median is 2.`,
 
         // Setup Challenge View Listeners
         function setupChallengeViewListeners() {
-            const editor = document.getElementById('code-editor');
-            const lineNumbers = document.getElementById('line-numbers');
-
-            editor.addEventListener('input', () => {
-                updateLineNumbers();
+            // Initialize CodeMirror editor
+            if (codeMirrorEditor) {
+                codeMirrorEditor.toTextArea();
+            }
+            
+            const textarea = document.getElementById('code-editor');
+            codeMirrorEditor = CodeMirror.fromTextArea(textarea, {
+                mode: 'javascript',
+                theme: 'material-darker',
+                lineNumbers: true,
+                autoCloseBrackets: true,
+                matchBrackets: true,
+                tabSize: 2,
+                indentWithTabs: false,
+                lineWrapping: true
             });
-
-            editor.addEventListener('scroll', () => {
-                lineNumbers.scrollTop = editor.scrollTop;
-            });
+            
+            // Update code from textarea value
+            codeMirrorEditor.setValue(`function solution() {
+    // Write your code here
+    
+}`);
 
             document.getElementById('timer-toggle').addEventListener('click', toggleTimer);
             document.getElementById('timer-reset').addEventListener('click', resetTimer);
@@ -1449,8 +1835,6 @@ Explanation: merged array = [1,2,3] and median is 2.`,
                     toggleTimer();
                 }
             });
-
-            updateLineNumbers();
         }
 
         // Update Line Numbers
@@ -1461,18 +1845,13 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
         }
 
-        // Timer Functions
+        // Timer Functions - Counts UP (elapsed time)
         function startTimer() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
-                if (!isPaused && timeRemaining > 0) {
-                    timeRemaining--;
+                if (!isPaused) {
+                    elapsedTime++;
                     updateTimerDisplay();
-                    
-                    if (timeRemaining === 0) {
-                        clearInterval(timer);
-                        showResult(false);
-                    }
                 }
             }, 1000);
         }
@@ -1483,7 +1862,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
         }
 
         function resetTimer() {
-            timeRemaining = currentChallenge.time;
+            elapsedTime = 0;
             isPaused = false;
             document.getElementById('timer-toggle').textContent = '⏸️';
             updateTimerDisplay();
@@ -1491,12 +1870,13 @@ Explanation: merged array = [1,2,3] and median is 2.`,
 
         function updateTimerDisplay() {
             const timerEl = document.getElementById('timer');
-            timerEl.textContent = formatTime(timeRemaining);
+            timerEl.textContent = formatTime(elapsedTime);
             
+            // Color based on time elapsed vs suggested time
             timerEl.classList.remove('green', 'amber', 'red');
-            if (timeRemaining > currentChallenge.time * 0.5) {
+            if (elapsedTime < currentChallenge.time * 0.5) {
                 timerEl.classList.add('green');
-            } else if (timeRemaining > currentChallenge.time * 0.25) {
+            } else if (elapsedTime < currentChallenge.time) {
                 timerEl.classList.add('amber');
             } else {
                 timerEl.classList.add('red');
@@ -1513,13 +1893,12 @@ Explanation: merged array = [1,2,3] and median is 2.`,
         let currentHint = 0;
         function useHint() {
             if (currentHint < currentChallenge.hints.length) {
-                timeRemaining = Math.max(0, timeRemaining - 30);
                 hintsUsed++;
-                alert(`💡 Hint ${currentHint + 1}: ${currentChallenge.hints[currentHint]}`);
+                showToast('info', `Hint ${currentHint + 1}`, currentChallenge.hints[currentHint]);
                 currentHint++;
                 updateTimerDisplay();
             } else {
-                alert('No more hints available!');
+                showToast('warning', 'No Hints Left', 'You have used all available hints!');
             }
         }
 
@@ -1532,9 +1911,26 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             const hasReturn = code.includes('return');
             
             if (!hasFunction || !hasReturn) {
-                if (!confirm('Your code doesn\'t seem complete. Submit anyway?')) return;
+                // Show custom confirm modal instead of browser alert
+                const confirmModal = document.getElementById('confirm-modal');
+                confirmModal.classList.add('active');
+                
+                document.getElementById('confirm-cancel').onclick = () => {
+                    confirmModal.classList.remove('active');
+                };
+                
+                document.getElementById('confirm-submit').onclick = () => {
+                    confirmModal.classList.remove('active');
+                    processSubmission(code);
+                };
+                return;
             }
 
+            processSubmission(code);
+        }
+
+        // Process the actual submission
+        function processSubmission(code) {
             // Check answer based on test cases
             let passed = false;
             try {
@@ -1557,7 +1953,7 @@ Explanation: merged array = [1,2,3] and median is 2.`,
         // Show Result
         function showResult(success) {
             clearInterval(timer);
-            const timeTaken = currentChallenge.time - timeRemaining;
+            const timeTaken = elapsedTime;
             const score = success ? Math.max(0, 100 - hintsUsed * 10 - Math.floor(timeTaken / 10)) : 0;
 
             // Update progress
@@ -1637,6 +2033,16 @@ Explanation: merged array = [1,2,3] and median is 2.`,
             const total = progress.history.length;
             const successCount = progress.history.filter(h => h.success).length;
             document.getElementById('success-rate').textContent = total ? `${Math.round(successCount / total * 100)}%` : '0%';
+
+            // Update hero stats
+            document.getElementById('hero-solved').textContent = solved;
+            document.getElementById('hero-time').textContent = totalTime >= 60 ? `${Math.floor(totalTime / 60)}m` : `${totalTime}s`;
+            document.getElementById('hero-streak').textContent = Math.min(streak, 7);
+        }
+
+        // Show Homepage
+        function showHomepage() {
+            document.getElementById('homepage').style.display = 'flex';
         }
 
         // Setup Event Listeners
@@ -1648,10 +2054,56 @@ Explanation: merged array = [1,2,3] and median is 2.`,
                     renderChallengeList(btn.dataset.filter);
                 });
             });
+
+            // Start button
+            document.getElementById('start-btn').addEventListener('click', () => {
+                document.getElementById('homepage').style.display = 'none';
+                showToast('success', 'Welcome!', 'Ready to start practicing? Pick a challenge!');
+            });
+        }
+
+        // Toast Notification System
+        function showToast(type, title, message, duration = 5000) {
+            const container = document.getElementById('toast-container');
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">${icons[type]}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close">&times;</button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Close button
+            toast.querySelector('.toast-close').addEventListener('click', () => {
+                removeToast(toast);
+            });
+            
+            // Auto remove
+            setTimeout(() => {
+                removeToast(toast);
+            }, duration);
+        }
+        
+        function removeToast(toast) {
+            toast.classList.add('hiding');
+            setTimeout(() => toast.remove(), 300);
         }
 
         // Initialize app
         init();
+        showHomepage();
     </script>
 </body>
 </html>
